@@ -4,7 +4,9 @@ COPY ./src ./src
 COPY pom.xml .
 COPY .mvn .mvn
 COPY mvnw .
-RUN ./mvnw clean install -Dmaven.test.skip=true
+# Fix permission denied issue
+RUN chmod +x ./mvnw \
+    && ./mvnw clean install -Dmaven.test.skip=true
 
 FROM openjdk:17-alpine
 WORKDIR /app
